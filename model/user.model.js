@@ -5,6 +5,17 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  email: {
+    type: String,
+    required: true,
+  },
+  passowrd: {
+    type: String,
+    required: true,
+  },
+  phone: {
+    type: String,
+  },
 });
 
 export const User = mongoose.model("User", userSchema);
