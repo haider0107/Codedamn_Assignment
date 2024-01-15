@@ -2,8 +2,10 @@ import { Router } from "express";
 
 const router = Router();
 
+// User register route
 router.route("/register").post();
 
-// wtite code here
+// User login route
+router.route("/login").post();
 
 export default router;
