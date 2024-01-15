@@ -4,68 +4,63 @@ import generateToken from "../utils/generateToken.js";
 
 const registerUser = async (req, res) => {
   try {
-    const { fullName } = req.body;
+    const { fullName, email, password } = req.body;
 
-    // check if the user exist
-    const userExist = await User.findOne({});
+    const userExist = await User.findOne({ email });
 
     if (userExist) {
-      // return response with status 401 and exit out of function
+      return res.status(401).json({ message: "User already registerd" });
     }
 
-    // hash the password before putting it in server
-    const _ = await bcrypt.hash();
-
-    // register user
+    const hashPassword = await bcrypt.hash(password, 10);
 
     const user = await User.create({
-      // pass the object value in here
+      email,
+      fullName,
+      passowrd: hashPassword,
     });
 
-    // Check if user is register
-    const createdUser = await User
-      .findById
-      // pass value
-      ();
+    const createdUser = await User.findById(user._id).select("-password");
 
     return res
       .status(201)
-      .json
-      // pass the value
-      ();
+      .json({ success: "User registered successfully", createdUser });
   } catch (error) {
     console.log("Register controller error :: Error : ", error);
+    res.status(500).json({ error });
   }
 };
 
 const loginUser = async (req, res) => {
   try {
-    const {} = req.body;
+    const { email, password } = req.body;
 
-    // check if the user exist
-    const userExist = await User.findOne({});
+    const userExist = await User.findOne({ email });
 
     if (!userExist) {
-      // return response with status 401 and exit out of function
+      return res
+        .status(401)
+        .json({ message: "Email or Password is incorrect." });
     }
 
-    // check if the password is incorrect
-    const isPosswordCorrect = await bcrypt.compare(); // compare request password and database password
+    const isPosswordCorrect = await bcrypt.compare(
+      password,
+      userExist.passowrd
+    );
 
     if (!isPosswordCorrect) {
-      // return response with status 401 and exit out of function
+      return res
+        .status(401)
+        .json({ message: "Email or Password is incorrect." });
     }
 
-    // creat a payload for JWT, you can store id or user email
     const payload = {
-      // write payload
+      email: userExist.email,
+      _id: userExist._id,
     };
 
-    // generate token
     const token = generateToken(payload);
 
-    // seting option for cookie
-    // this make the cookie only modified by the server
     const option = {
       httpOnly: true,
       secure: true,
@@ -74,11 +69,10 @@ const loginUser = async (req, res) => {
     return res
       .status(201)
       .cookie("token", token, option)
-      .json
-      // return user with
-      ();
+      .json({ success: "User login successFully" });
   } catch (error) {
     console.log("Login controller error :: Error : ", error);
+    res.status(500).json({ error });
   }
 };
 
