@@ -1,1 +1,1 @@
-tabs: ['model/user.model.js']
+tabs: ['db/index.js']
