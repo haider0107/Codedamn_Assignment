@@ -1,1 +1,2 @@
 tabs: ['db/index.js']
+terminals: ['npm i']
