@@ -17,7 +17,7 @@ const registerUser = async (req, res) => {
     const user = await User.create({
       email,
       fullName,
-      passowrd: hashPassword,
+      password: hashPassword,
     });
 
     const createdUser = await User.findById(user._id).select("-password");
