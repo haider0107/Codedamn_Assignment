@@ -1,0 +1,2 @@
+tabs: ["routes/user.routes.js", "app.js"]
+terminals: ["npm i"]
