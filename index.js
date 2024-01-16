@@ -9,8 +9,8 @@ connectDB()
       throw error;
     });
 
-    app.listen(process.env.PORT || 5000, () => {
-      console.log(`⚙️  Port is running on ${process.env.PORT}`);
+    app.listen(process.env.PORT || 1337, () => {
+      console.log(`⚙️  Port is running on ${process.env.PORT || 1337}`);
     });
   })
   .catch((err) => {
