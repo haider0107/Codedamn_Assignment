@@ -1,0 +1,2 @@
+tabs: ["controller/user.controllers.js"]
+terminals: ["npm i"]

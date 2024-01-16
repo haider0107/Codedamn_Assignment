@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true, // this will make the email unique
   },
-  passowrd: {
+  password: {
     type: String,
     required: true,
   },
