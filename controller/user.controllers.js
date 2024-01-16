@@ -45,7 +45,7 @@ const loginUser = async (req, res) => {
 
     const isPosswordCorrect = await bcrypt.compare(
       password,
-      userExist.passowrd
+      userExist.password
     );
 
     if (!isPosswordCorrect) {
@@ -67,7 +67,7 @@ const loginUser = async (req, res) => {
     };
 
     return res
-      .status(201)
+      .status(200)
       .cookie("token", token, option)
       .json({ success: "User login successFully" });
   } catch (error) {
@@ -76,4 +76,14 @@ const loginUser = async (req, res) => {
   }
 };
 
-export { registerUser, loginUser };
+const getCurrentUser = async (req, res) => {
+  try {
+    const user = req.user;
+    return res.status(200).json({ success: "User fetched successfully", user });
+  } catch (error) {
+    console.log("Get current user controller error :: Error : ", error);
+    res.status(500).json({ error });
+  }
+};
+
+export { registerUser, loginUser, getCurrentUser };

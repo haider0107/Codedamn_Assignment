@@ -1,0 +1,2 @@
+tabs: ["middleware/auth.middleware.js"]
+terminals: ["npm i"]
