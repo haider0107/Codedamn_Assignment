@@ -1,0 +1,2 @@
+tabs: ["index.js", "app.js"]
+terminals: ["npm i"]
